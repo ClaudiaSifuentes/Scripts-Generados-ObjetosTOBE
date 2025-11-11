@@ -1,0 +1,21 @@
+Account Currency,Deleted,Cuenta de socio,Important,Account Name,Afiliado al RDE,Reparto Digital,Suscripción Recibo Digital,Sín Reparto Recibo FiSíco,Tiene Contactos Relacionados,¿Es autoridad?,Es Influyente,Es Municipalidad,Directory Listed,Foreign Exchange,Gaming or Gambling,Money Lending/Pawning,Enable Autopay,Fraud,Is Person Account,Is Root Resolved
+PEN,false,false,false,Luis GMBH,false,false,true,false,true,false,false,false,true,false,false,false,false,false,false,false
+PEN,false,false,false,Juan Genuine Maria,false,false,true,true,true,false,false,false,false,false,false,false,false,false,false,false
+PEN,false,false,false,Carlos Juan Luis,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false
+PEN,false,false,false,Jorge CORP,false,false,true,false,true,false,false,false,true,false,false,false,true,false,false,false
+PEN,false,false,false,Carlos Maria Juan,false,true,false,true,false,false,false,false,false,false,false,false,false,false,false,false
+PEN,false,false,false,Carlos LLC,false,false,false,true,false,false,false,false,true,false,false,false,false,false,true,false
+PEN,false,false,false,Sonia Sonia Sonia,false,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false
+PEN,false,false,false,Elena GMBH,false,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false
+PEN,false,false,false,Luis SAC,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false
+PEN,false,false,false,Carlos LLC,false,false,false,true,true,false,false,false,true,false,false,false,false,false,true,true
+PEN,false,false,false,Maria Maria Ana,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false
+PEN,false,false,false,Juan Juan Juan,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false
+PEN,false,false,false,Sonia GMBH,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false
+PEN,false,false,false,Luis S.R.L.,false,true,false,false,true,false,false,false,false,false,false,false,false,false,true,false
+PEN,false,false,false,Jorge GMBH,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false
+PEN,false,false,false,Juan LLC,false,true,true,true,false,false,false,false,true,true,false,false,false,false,true,false
+PEN,false,false,false,Jorge GMBH,false,true,false,true,false,true,false,false,false,false,false,false,false,false,false,false
+PEN,false,false,false,Maria SA,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false
+PEN,false,true,false,Ana Jorge Luis,false,false,false,false,false,false,false,true,false,false,false,false,false,true,false,false
+PEN,false,true,false,Elena Juan Carlos,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false
