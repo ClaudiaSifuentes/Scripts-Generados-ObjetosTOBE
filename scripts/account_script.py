@@ -31,6 +31,7 @@ FINAL_HEADER_LABELS: List[str] = [
 	"Fraud",
 	"Is Person Account",
 	"Is Root Resolved",
+	"Legacy Contact Id",
 ]
 
 LABEL_TO_API: Dict[str, str] = {
@@ -113,6 +114,7 @@ def gen_row(i: int) -> Dict[str, str]:
 	row["Fraud"] = bool_str(0.005)
 	row["Is Person Account"] = bool_str(0.25)
 	row["Is Root Resolved"] = bool_str(0.02)
+	row["Legacy Contact Id"] = f"CONTACT00{ i:08d}"
 
 	return row
 
