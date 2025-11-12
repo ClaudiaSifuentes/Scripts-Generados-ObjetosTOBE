@@ -21,13 +21,18 @@ LABEL_TO_API = {
     'Is Person Account': 'vlocity_cmt__IsPersonAccount__c',
     'Marca Legal': 'PZ_LegalBrand__c',
     'Mobile Opt Out': 'et4ae5__HasOptedOutOfMobile__c',
-    'Name': 'Name',
+    'Last Name': 'LastName',
+    'First Name': 'FirstName',
+    'Salutation': 'Salutation',
+    'Middle Name': 'MiddleName',
+    'Suffix': 'Suffix',
     'Partner': 'vlocity_cmt__IsPartner__c',
     'Recibir notificaciones push': 'pz_ReceivePushNotifications__c',
     'Legacy Contact Id': 'Legacy_Contact_Id__c',
 }
 
 FINAL_HEADER_LABELS = list(LABEL_TO_API.keys())
+API_HEADER_NAMES = [LABEL_TO_API[label] for label in FINAL_HEADER_LABELS]
 
 
 def sf15(n=15):
@@ -60,8 +65,18 @@ def random_person_name():
     return f"{first} {middle} {last}"
 
 
+def random_person():
+    first = random.choice(['Natalia','Ana','Pedro','Luis','María','Carlos','Andrea','Jorge','Lucia'])
+    middle = random.choice(['Lucia','Carlos','María','Rosa','Alonso','Jose'])
+    last = random.choice(['Vargas','Perez','Gonzalez','Ramirez','Flores','Rojas'])
+    return first, middle, last
+
 def gen_row(i: int):
-    name = random_person_name()
+    first, middle, last = random_person()
+    salutation = random.choice(['Sr.','Sra.','Dr.',''])
+    suffix = random.choice(['','Jr.','Sr.'])
+    name = f"{first} {middle} {last}".strip()
+
     owner = sf18()
     created_by = sf18()
     last_modified_by = sf18()
@@ -81,16 +96,24 @@ def gen_row(i: int):
         'vlocity_cmt__IsPersonAccount__c': bool_str(0.01),
         'PZ_LegalBrand__c': bool_str(0.02),
         'et4ae5__HasOptedOutOfMobile__c': bool_str(0.05),
+        'LastName': last,
+        'FirstName': first,
+        'Salutation': salutation,
+        'MiddleName': middle,
+        'Suffix': suffix,
         'Name': name,
         'vlocity_cmt__IsPartner__c': bool_str(0.02),
         'pz_ReceivePushNotifications__c': bool_str(0.2),
-        'Legacy_Contact_Id__c': f"CONTACT00{ i:08d}",
+        'Legacy_Contact_Id__c': f"CONTACT00{i:08d}",
     }
 
     final = {}
+    # Return a dict keyed by API names so the CSV can use API headers.
     for label, api in LABEL_TO_API.items():
-        final[label] = row.get(api, '')
+        final[api] = row.get(api, '')
     return final
+
+
 
 
 def main():
@@ -115,10 +138,11 @@ def main():
         out_path = out_arg
 
     with open(out_path, 'w', newline='', encoding='utf-8') as f:
-        w = csv.DictWriter(f, fieldnames=FINAL_HEADER_LABELS, extrasaction='ignore')
+        # Use API names as CSV headers per user's request
+        w = csv.DictWriter(f, fieldnames=API_HEADER_NAMES, extrasaction='ignore')
         w.writeheader()
         for r in rows:
-            w.writerow({k: r.get(k, '') for k in FINAL_HEADER_LABELS})
+            w.writerow({k: r.get(k, '') for k in API_HEADER_NAMES})
 
     print(f"Wrote {len(rows)} records to {out_path}")
 

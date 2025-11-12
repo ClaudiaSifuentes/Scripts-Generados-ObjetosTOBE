@@ -1,21 +1,21 @@
-Active,Asesor,Authorized,Cliente Especial,Cliente recurrente,Consentimiento condiciones de privacidad,Consentimiento terminos y condiciones,Consentimientos para otras finalidades,Contacto Recurrente,Employee,Fraud,Is Person Account,Marca Legal,Mobile Opt Out,Name,Partner,Recibir notificaciones push,Legacy Contact Id
-true,false,false,false,false,false,true,false,true,false,false,false,false,false,Carlos Carlos Ramirez,false,false,CONTACT0000000001
-true,false,false,false,true,false,false,false,false,false,false,false,false,false,María Carlos Perez,false,true,CONTACT0000000002
-true,false,false,false,false,true,false,false,true,false,false,false,false,false,Natalia Carlos Gonzalez,false,true,CONTACT0000000003
-true,false,true,true,false,true,true,false,true,false,false,false,false,false,Andrea Lucia Perez,false,true,CONTACT0000000004
-true,false,false,false,false,true,false,false,false,false,false,false,false,false,Luis Alonso Flores,false,false,CONTACT0000000005
-true,false,false,false,false,true,false,true,false,false,false,false,false,false,Carlos Lucia Rojas,false,true,CONTACT0000000006
-true,false,false,false,false,true,false,false,false,false,false,false,false,false,Pedro Alonso Flores,false,false,CONTACT0000000007
-true,false,false,false,false,false,true,false,false,false,false,false,false,false,Andrea Lucia Ramirez,false,false,CONTACT0000000008
-true,false,false,true,false,false,false,false,false,false,false,false,false,false,Pedro María Perez,false,false,CONTACT0000000009
-true,false,true,false,false,false,true,false,false,false,false,false,false,false,Natalia María Vargas,false,false,CONTACT0000000010
-true,false,true,false,false,true,false,false,false,false,false,false,false,false,Luis Lucia Gonzalez,false,false,CONTACT0000000011
-true,false,false,false,false,false,false,false,false,false,false,false,false,false,Luis Lucia Vargas,false,true,CONTACT0000000012
-true,false,false,false,true,true,true,false,false,false,false,false,false,false,Natalia Rosa Gonzalez,false,false,CONTACT0000000013
-true,false,false,false,false,false,false,false,false,true,false,false,false,false,Ana María Vargas,false,true,CONTACT0000000014
-true,false,false,false,true,false,true,false,false,false,false,false,false,false,Lucia Carlos Perez,false,false,CONTACT0000000015
-false,false,false,false,false,true,true,false,false,false,false,false,false,false,Luis Lucia Gonzalez,false,false,CONTACT0000000016
-true,false,false,false,false,true,true,true,false,false,false,false,false,false,Ana Lucia Vargas,false,false,CONTACT0000000017
-true,false,false,false,false,true,true,true,true,false,false,false,false,false,María María Vargas,false,false,CONTACT0000000018
-true,false,false,true,false,false,false,false,true,false,false,false,false,false,Andrea Lucia Vargas,false,false,CONTACT0000000019
-true,false,false,false,false,true,false,false,false,false,false,false,false,false,Jorge Carlos Ramirez,false,false,CONTACT0000000020
+vlocity_cmt__IsActive__c,pz_Processor__c,vlocity_cmt__Authorized__c,pz_SpecialClient__c,pz_ReturningCustomer__c,pz_ConsentConditionsAndPrivacy__c,pz_ConsentTermsAndConditions__c,pz_ConsentTermsAditionals__c,pz_RecurringContact__c,vlocity_cmt__IsEmployee__c,vlocity_cmt__HasFraud__c,vlocity_cmt__IsPersonAccount__c,PZ_LegalBrand__c,et4ae5__HasOptedOutOfMobile__c,LastName,FirstName,Salutation,MiddleName,Suffix,vlocity_cmt__IsPartner__c,pz_ReceivePushNotifications__c,Legacy_Contact_Id__c
+true,false,true,false,false,true,false,false,false,false,false,false,false,false,Ramirez,Carlos,Sr.,Carlos,,false,false,CONTACT0000000001
+true,false,false,false,false,false,true,false,false,false,false,false,false,false,Perez,Pedro,Sr.,Jose,Sr.,false,false,CONTACT0000000002
+true,false,false,false,false,false,false,false,false,false,false,false,false,false,Ramirez,Luis,,Rosa,,false,false,CONTACT0000000003
+false,false,false,false,false,true,false,true,false,false,false,false,false,false,Flores,Ana,Sr.,María,,false,false,CONTACT0000000004
+true,false,false,false,false,true,false,true,false,false,false,false,false,false,Ramirez,Luis,Sra.,Carlos,,false,true,CONTACT0000000005
+false,false,false,false,false,true,true,false,false,true,false,false,false,false,Perez,Jorge,,Jose,Sr.,false,false,CONTACT0000000006
+true,false,false,false,false,false,true,false,false,false,false,false,false,false,Flores,Lucia,,Alonso,,false,true,CONTACT0000000007
+true,false,true,false,false,false,true,true,false,false,false,false,false,false,Rojas,Jorge,Sr.,Carlos,Jr.,false,true,CONTACT0000000008
+true,true,false,false,false,true,true,false,false,false,false,false,false,false,Vargas,Natalia,Dr.,Jose,,false,false,CONTACT0000000009
+true,false,true,false,false,true,false,true,false,false,false,false,false,false,Rojas,Luis,Sra.,Jose,Jr.,false,false,CONTACT0000000010
+true,false,false,false,true,true,true,false,false,false,false,false,false,false,Rojas,Pedro,,Jose,Jr.,false,false,CONTACT0000000011
+true,false,false,false,false,true,true,true,false,false,false,false,false,false,Vargas,Jorge,Dr.,María,,false,false,CONTACT0000000012
+true,false,false,false,false,true,true,false,false,false,false,false,false,false,Flores,Luis,Sr.,Lucia,,false,false,CONTACT0000000013
+true,false,false,false,false,true,true,true,false,false,false,false,false,false,Gonzalez,Pedro,,Carlos,Sr.,false,false,CONTACT0000000014
+true,false,false,false,false,true,true,false,false,false,false,true,false,false,Perez,Pedro,Sra.,Alonso,,false,false,CONTACT0000000015
+true,false,true,false,false,true,true,false,false,false,false,false,false,false,Vargas,Jorge,Sra.,Carlos,,false,true,CONTACT0000000016
+false,false,false,false,true,true,true,false,false,false,false,false,false,false,Gonzalez,Andrea,Sra.,Lucia,Sr.,false,true,CONTACT0000000017
+true,false,false,false,false,true,true,false,true,false,false,false,false,false,Rojas,Luis,,Carlos,,false,true,CONTACT0000000018
+true,false,false,false,false,true,false,false,false,false,false,false,false,false,Gonzalez,Carlos,Sr.,María,Sr.,false,false,CONTACT0000000019
+true,false,true,true,false,true,true,false,false,false,false,false,false,false,Perez,Jorge,Sra.,Carlos,Jr.,false,false,CONTACT0000000020
