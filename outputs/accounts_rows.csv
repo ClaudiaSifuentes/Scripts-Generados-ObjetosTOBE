@@ -1,21 +1,21 @@
-Account Currency,Deleted,Cuenta de socio,Important,Account Name,Afiliado al RDE,Reparto Digital,Suscripción Recibo Digital,Sín Reparto Recibo FiSíco,Tiene Contactos Relacionados,¿Es autoridad?,Es Influyente,Es Municipalidad,Directory Listed,Foreign Exchange,Gaming or Gambling,Money Lending/Pawning,Enable Autopay,Fraud,Is Person Account,Is Root Resolved,Legacy Contact Id
-PEN,false,false,false,Luis GMBH,false,false,true,false,true,false,false,false,true,false,false,false,false,false,false,false,CONTACT0000000001
-PEN,false,false,false,Juan Genuine Maria,false,false,true,true,true,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000002
-PEN,false,false,false,Carlos Juan Luis,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000003
-PEN,false,false,false,Jorge CORP,false,false,true,false,true,false,false,false,true,false,false,false,true,false,false,false,CONTACT0000000004
-PEN,false,false,false,Carlos Maria Juan,false,true,false,true,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000005
-PEN,false,false,false,Carlos LLC,false,false,false,true,false,false,false,false,true,false,false,false,false,false,true,false,CONTACT0000000006
-PEN,false,false,false,Sonia Sonia Sonia,false,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false,CONTACT0000000007
-PEN,false,false,false,Elena GMBH,false,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false,CONTACT0000000008
-PEN,false,false,false,Luis SAC,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000009
-PEN,false,false,false,Carlos LLC,false,false,false,true,true,false,false,false,true,false,false,false,false,false,true,true,CONTACT0000000010
-PEN,false,false,false,Maria Maria Ana,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000011
-PEN,false,false,false,Juan Juan Juan,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000012
-PEN,false,false,false,Sonia GMBH,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,CONTACT0000000013
-PEN,false,false,false,Luis S.R.L.,false,true,false,false,true,false,false,false,false,false,false,false,false,false,true,false,CONTACT0000000014
-PEN,false,false,false,Jorge GMBH,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000015
-PEN,false,false,false,Juan LLC,false,true,true,true,false,false,false,false,true,true,false,false,false,false,true,false,CONTACT0000000016
-PEN,false,false,false,Jorge GMBH,false,true,false,true,false,true,false,false,false,false,false,false,false,false,false,false,CONTACT0000000017
-PEN,false,false,false,Maria SA,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000018
-PEN,false,true,false,Ana Jorge Luis,false,false,false,false,false,false,false,true,false,false,false,false,false,true,false,false,CONTACT0000000019
-PEN,false,true,false,Elena Juan Carlos,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000020
+Legacy_Account_Id__c,CurrencyIsoCode,IsPartner,Name,pz_AffiliatedRDE__c,pz_DigitalCast__c,pz_DigitalReceiptSubscription__c,pz_DistributionPhysicalMoney__c,pz_HasRelatedContacts__c,pz_IsAuthority__c,pz_isInfluential__c,pz_isMunicipality__c,vlocity_cmt__DirectoryListed__c,vlocity_cmt__Disclosure1__c,vlocity_cmt__Disclosure2__c,vlocity_cmt__Disclosure3__c,vlocity_cmt__EnableAutopay__c,vlocity_cmt__HasFraud__c,vlocity_cmt__IsPersonAccount__c,vlocity_cmt__IsRootResolved__c,Legacy_Contact_Id__c
+ACCOUNT0000000001,PEN,false,Luis GMBH,false,false,true,false,true,false,false,false,true,false,false,false,false,false,false,false,CONTACT0000000001
+ACCOUNT0000000002,PEN,false,Juan Genuine Maria,false,false,true,true,true,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000002
+ACCOUNT0000000003,PEN,false,Carlos Juan Luis,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000003
+ACCOUNT0000000004,PEN,false,Jorge CORP,false,false,true,false,true,false,false,false,true,false,false,false,true,false,false,false,CONTACT0000000004
+ACCOUNT0000000005,PEN,false,Carlos Maria Juan,false,true,false,true,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000005
+ACCOUNT0000000006,PEN,false,Carlos LLC,false,false,false,true,false,false,false,false,true,false,false,false,false,false,true,false,CONTACT0000000006
+ACCOUNT0000000007,PEN,false,Sonia Sonia Sonia,false,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false,CONTACT0000000007
+ACCOUNT0000000008,PEN,false,Elena GMBH,false,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false,CONTACT0000000008
+ACCOUNT0000000009,PEN,false,Luis SAC,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000009
+ACCOUNT0000000010,PEN,false,Carlos LLC,false,false,false,true,true,false,false,false,true,false,false,false,false,false,true,true,CONTACT0000000010
+ACCOUNT0000000011,PEN,false,Maria Maria Ana,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000011
+ACCOUNT0000000012,PEN,false,Juan Juan Juan,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000012
+ACCOUNT0000000013,PEN,false,Sonia GMBH,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,CONTACT0000000013
+ACCOUNT0000000014,PEN,false,Luis S.R.L.,false,true,false,false,true,false,false,false,false,false,false,false,false,false,true,false,CONTACT0000000014
+ACCOUNT0000000015,PEN,false,Jorge GMBH,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000015
+ACCOUNT0000000016,PEN,false,Juan LLC,false,true,true,true,false,false,false,false,true,true,false,false,false,false,true,false,CONTACT0000000016
+ACCOUNT0000000017,PEN,false,Jorge GMBH,false,true,false,true,false,true,false,false,false,false,false,false,false,false,false,false,CONTACT0000000017
+ACCOUNT0000000018,PEN,false,Maria SA,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000018
+ACCOUNT0000000019,PEN,true,Ana Jorge Luis,false,false,false,false,false,false,false,true,false,false,false,false,false,true,false,false,CONTACT0000000019
+ACCOUNT0000000020,PEN,true,Elena Juan Carlos,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,CONTACT0000000020

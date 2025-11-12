@@ -10,10 +10,9 @@ from typing import Dict, List
 
 
 FINAL_HEADER_LABELS: List[str] = [
+	"Legacy_Account_Id__c",
 	"Account Currency",
-	"Deleted",
 	"Cuenta de socio",
-	"Important",
 	"Account Name",
 	"Afiliado al RDE",
 	"Reparto Digital",
@@ -35,6 +34,7 @@ FINAL_HEADER_LABELS: List[str] = [
 ]
 
 LABEL_TO_API: Dict[str, str] = {
+	"Legacy_Account_Id__c": "Legacy_Account_Id__c",
 	"Account Currency": "CurrencyIsoCode",
 	"Deleted": "IsDeleted",
 	"Cuenta de socio": "IsPartner",
@@ -57,6 +57,10 @@ LABEL_TO_API: Dict[str, str] = {
 	"Is Person Account": "vlocity_cmt__IsPersonAccount__c",
 	"Is Root Resolved": "vlocity_cmt__IsRootResolved__c",
 }
+
+LABEL_TO_API["Legacy Contact Id"] = "Legacy_Contact_Id__c"
+
+API_HEADER_NAMES: List[str] = [LABEL_TO_API[label] for label in FINAL_HEADER_LABELS]
 
 
 def bool_str(p_true: float = 0.2) -> str:
@@ -92,35 +96,37 @@ def account_name(i: int) -> str:
 
 def gen_row(i: int) -> Dict[str, str]:
 
+	# Build row keyed by API names (so CSV headers can be API names)
 	row: Dict[str, str] = {}
-	row["Account Currency"] = pick_currency()
-	row["Deleted"] = "false" if random.random() < 0.98 else "true"
-	row["Cuenta de socio"] = bool_str(0.08)
-	row["Important"] = bool_str(0.05)
-	row["Account Name"] = account_name(i)
-	row["Afiliado al RDE"] = bool_str(0.05)
-	row["Reparto Digital"] = bool_str(0.35)
-	row["Suscripción Recibo Digital"] = bool_str(0.30)
-	row["Sín Reparto Recibo FiSíco"] = bool_str(0.20)
-	row["Tiene Contactos Relacionados"] = bool_str(0.25)
-	row["¿Es autoridad?"] = bool_str(0.02)
-	row["Es Influyente"] = bool_str(0.04)
-	row["Es Municipalidad"] = bool_str(0.01)
-	row["Directory Listed"] = bool_str(0.15)
-	row["Foreign Exchange"] = bool_str(0.03)
-	row["Gaming or Gambling"] = bool_str(0.01)
-	row["Money Lending/Pawning"] = bool_str(0.01)
-	row["Enable Autopay"] = bool_str(0.12)
-	row["Fraud"] = bool_str(0.005)
-	row["Is Person Account"] = bool_str(0.25)
-	row["Is Root Resolved"] = bool_str(0.02)
-	row["Legacy Contact Id"] = f"CONTACT00{ i:08d}"
+	row[LABEL_TO_API["Legacy_Account_Id__c"]] = f"ACCOUNT00{i:08d}"
+	row[LABEL_TO_API["Account Currency"]] = pick_currency()
+	row[LABEL_TO_API["Deleted"]] = "false" if random.random() < 0.98 else "true"
+	row[LABEL_TO_API["Cuenta de socio"]] = bool_str(0.08)
+	row[LABEL_TO_API["Important"]] = bool_str(0.05)
+	row[LABEL_TO_API["Account Name"]] = account_name(i)
+	row[LABEL_TO_API["Afiliado al RDE"]] = bool_str(0.05)
+	row[LABEL_TO_API["Reparto Digital"]] = bool_str(0.35)
+	row[LABEL_TO_API["Suscripción Recibo Digital"]] = bool_str(0.30)
+	row[LABEL_TO_API["Sín Reparto Recibo FiSíco"]] = bool_str(0.20)
+	row[LABEL_TO_API["Tiene Contactos Relacionados"]] = bool_str(0.25)
+	row[LABEL_TO_API["¿Es autoridad?"]] = bool_str(0.02)
+	row[LABEL_TO_API["Es Influyente"]] = bool_str(0.04)
+	row[LABEL_TO_API["Es Municipalidad"]] = bool_str(0.01)
+	row[LABEL_TO_API["Directory Listed"]] = bool_str(0.15)
+	row[LABEL_TO_API["Foreign Exchange"]] = bool_str(0.03)
+	row[LABEL_TO_API["Gaming or Gambling"]] = bool_str(0.01)
+	row[LABEL_TO_API["Money Lending/Pawning"]] = bool_str(0.01)
+	row[LABEL_TO_API["Enable Autopay"]] = bool_str(0.12)
+	row[LABEL_TO_API["Fraud"]] = bool_str(0.005)
+	row[LABEL_TO_API["Is Person Account"]] = bool_str(0.25)
+	row[LABEL_TO_API["Is Root Resolved"]] = bool_str(0.02)
+	row[LABEL_TO_API["Legacy Contact Id"]] = f"CONTACT00{i:08d}"
 
 	return row
 
 
 def main(argv: List[str] | None = None) -> int:
-	parser = argparse.ArgumentParser(description="Generate example Account CSV with LABEL headers")
+	parser = argparse.ArgumentParser(description="Generate example Account CSV with API-name headers")
 	parser.add_argument("--n", "-n", type=int, default=100, help="number of rows to generate")
 	parser.add_argument("--out", "-o", type=str, default="accounts.csv", help="output CSV file")
 	parser.add_argument("--seed", type=int, help="random seed (optional)")
@@ -143,10 +149,11 @@ def main(argv: List[str] | None = None) -> int:
 		out_path = out_arg
 
 	with open(out_path, "w", newline="", encoding="utf-8") as f:
-		writer = csv.DictWriter(f, fieldnames=FINAL_HEADER_LABELS, extrasaction="ignore")
+		# Use API names as CSV headers per user's request
+		writer = csv.DictWriter(f, fieldnames=API_HEADER_NAMES, extrasaction="ignore")
 		writer.writeheader()
 		for r in rows:
-			writer.writerow(r)
+			writer.writerow({k: r.get(k, "") for k in API_HEADER_NAMES})
 
 	print(f"Wrote {len(rows)} records to {out_path}")
 	return 0
