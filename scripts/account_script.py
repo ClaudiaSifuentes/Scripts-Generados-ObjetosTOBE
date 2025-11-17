@@ -10,9 +10,8 @@ from typing import Dict, List
 
 
 FINAL_HEADER_LABELS: List[str] = [
-	"Legacy_Account_Id__c",
+	"pz_ExternalAccountId__c",
 	"Account Currency",
-	"Cuenta de socio",
 	"Account Name",
 	"Afiliado al RDE",
 	"Reparto Digital",
@@ -30,11 +29,11 @@ FINAL_HEADER_LABELS: List[str] = [
 	"Fraud",
 	"Is Person Account",
 	"Is Root Resolved",
-	"Legacy Contact Id",
 ]
 
 LABEL_TO_API: Dict[str, str] = {
-	"Legacy_Account_Id__c": "Legacy_Account_Id__c",
+	"pz_ExternalAccountId__c": "pz_ExternalAccountId__c",
+	"Legacy_Contact_Id__c": "Legacy_Contact_Id__c",
 	"Account Currency": "CurrencyIsoCode",
 	"Deleted": "IsDeleted",
 	"Cuenta de socio": "IsPartner",
@@ -94,11 +93,16 @@ def account_name(i: int) -> str:
 		return f"{random.choice(FIRST_NAMES).title()} {random.choice(COMPANY_SUFFIX)}"
 
 
-def gen_row(i: int) -> Dict[str, str]:
+def gen_row(i: int, used_ext_ids=None) -> Dict[str, str]:
 
-	# Build row keyed by API names (so CSV headers can be API names)
 	row: Dict[str, str] = {}
-	row[LABEL_TO_API["Legacy_Account_Id__c"]] = f"ACCOUNT00{i:08d}"
+	while True:
+		num = random.randint(0, 99999999)
+		if used_ext_ids is None or num not in used_ext_ids:
+			if used_ext_ids is not None:
+				used_ext_ids.add(num)
+			row[LABEL_TO_API["pz_ExternalAccountId__c"]] = f"ACCOUNT00{num:08d}"
+			break
 	row[LABEL_TO_API["Account Currency"]] = pick_currency()
 	row[LABEL_TO_API["Deleted"]] = "false" if random.random() < 0.98 else "true"
 	row[LABEL_TO_API["Cuenta de socio"]] = bool_str(0.08)
@@ -116,11 +120,10 @@ def gen_row(i: int) -> Dict[str, str]:
 	row[LABEL_TO_API["Foreign Exchange"]] = bool_str(0.03)
 	row[LABEL_TO_API["Gaming or Gambling"]] = bool_str(0.01)
 	row[LABEL_TO_API["Money Lending/Pawning"]] = bool_str(0.01)
-	row[LABEL_TO_API["Enable Autopay"]] = bool_str(0.12)
+	row[LABEL_TO_API["Enable Autopay"]] = "false"
 	row[LABEL_TO_API["Fraud"]] = bool_str(0.005)
 	row[LABEL_TO_API["Is Person Account"]] = bool_str(0.25)
 	row[LABEL_TO_API["Is Root Resolved"]] = bool_str(0.02)
-	row[LABEL_TO_API["Legacy Contact Id"]] = f"CONTACT00{i:08d}"
 
 	return row
 
@@ -135,7 +138,8 @@ def main(argv: List[str] | None = None) -> int:
 	if args.seed is not None:
 		random.seed(args.seed)
 
-	rows = [gen_row(i) for i in range(1, args.n + 1)]
+	used_ids = set()
+	rows = [gen_row(i, used_ids) for i in range(1, args.n + 1)]
 
 	out_arg = Path(args.out)
 	script_dir = Path(__file__).resolve().parent
@@ -148,14 +152,50 @@ def main(argv: List[str] | None = None) -> int:
 	else:
 		out_path = out_arg
 
-	with open(out_path, "w", newline="", encoding="utf-8") as f:
-		# Use API names as CSV headers per user's request
-		writer = csv.DictWriter(f, fieldnames=API_HEADER_NAMES, extrasaction="ignore")
-		writer.writeheader()
-		for r in rows:
-			writer.writerow({k: r.get(k, "") for k in API_HEADER_NAMES})
+	try:
+		with open(out_path, "w", newline="", encoding="utf-8") as f:
+			writer = csv.DictWriter(f, fieldnames=API_HEADER_NAMES, extrasaction="ignore")
+			writer.writeheader()
+			for r in rows:
+				writer.writerow({k: r.get(k, "") for k in API_HEADER_NAMES})
 
-	print(f"Wrote {len(rows)} records to {out_path}")
+		print(f"Wrote {len(rows)} records to {out_path}")
+	except PermissionError:
+		try:
+			print(f"PermissionError writing to {out_path}")
+			print(f"- Exists: {out_path.exists()}")
+			print(f"- Is symlink/junction: {out_path.is_symlink()}")
+			try:
+				print(f"- Writable by process (os.access): {os.access(out_path, os.W_OK)}")
+			except Exception:
+				pass
+		except Exception:
+			pass
+
+		timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+		alt_in_outputs = out_path.with_name(f"{out_path.stem}_{timestamp}{out_path.suffix}")
+		try:
+			with open(alt_in_outputs, "w", newline="", encoding="utf-8") as f:
+				writer = csv.DictWriter(f, fieldnames=API_HEADER_NAMES, extrasaction="ignore")
+				writer.writeheader()
+				for r in rows:
+					writer.writerow({k: r.get(k, "") for k in API_HEADER_NAMES})
+			print(f"Wrote {len(rows)} records to {alt_in_outputs} (timestamped fallback in outputs)")
+			return
+		except PermissionError:
+			pass
+
+		fallback = Path.cwd() / out_arg.name
+		try:
+			with open(fallback, "w", newline="", encoding="utf-8") as f:
+				writer = csv.DictWriter(f, fieldnames=API_HEADER_NAMES, extrasaction="ignore")
+				writer.writeheader()
+				for r in rows:
+					writer.writerow({k: r.get(k, "") for k in API_HEADER_NAMES})
+			print(f"Wrote {len(rows)} records to {fallback} (final fallback due to PermissionError writing to {out_path})")
+		except Exception as e:
+			print(f"Failed to write CSV to {out_path}, {alt_in_outputs}, and fallback {fallback}: {e}")
+			raise
 	return 0
 
 

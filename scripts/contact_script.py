@@ -28,7 +28,7 @@ LABEL_TO_API = {
     'Suffix': 'Suffix',
     'Partner': 'vlocity_cmt__IsPartner__c',
     'Recibir notificaciones push': 'pz_ReceivePushNotifications__c',
-    'Legacy Contact Id': 'Legacy_Contact_Id__c',
+    'pz_ExternalAccountId__c': 'pz_ExternalAccountId__c'
 }
 
 FINAL_HEADER_LABELS = list(LABEL_TO_API.keys())
@@ -71,15 +71,42 @@ def random_person():
     last = random.choice(['Vargas','Perez','Gonzalez','Ramirez','Flores','Rojas'])
     return first, middle, last
 
-def gen_row(i: int):
+def gen_row(i: int, used_ext_ids=None, accounts_list=None, unique_accounts=False):
     first, middle, last = random_person()
-    salutation = random.choice(['Sr.','Sra.','Dr.',''])
-    suffix = random.choice(['','Jr.','Sr.'])
+    salutation = random.choice(['Sr.', 'Sra.', 'Dr.', ''])
+    ID_Account = random.choice(['ACCOUNT0000000001', 'ACCOUNT0000000002', 'ACCOUNT0000000003', 'ACCOUNT0000000005', 'ACCOUNT0043464097', 'ACCOUNT0038870700', 'ACCOUNT0010986393', 'ACCOUNT0036230636', 'ACCOUNT0037290936'])
+    suffix = random.choice(['', 'Jr.', 'Sr.'])
     name = f"{first} {middle} {last}".strip()
 
     owner = sf18()
     created_by = sf18()
     last_modified_by = sf18()
+
+    # Determine external account id from picklist if provided, otherwise generate one
+    ext_id = ''
+    if accounts_list and len(accounts_list) > 0:
+        if unique_accounts:
+            # pick an unused id if possible
+            choices = [a for a in accounts_list if (used_ext_ids is None or a not in used_ext_ids)]
+            if choices:
+                ext_id = random.choice(choices)
+                if used_ext_ids is not None:
+                    used_ext_ids.add(ext_id)
+            else:
+                num = random.randint(0, 99999999)
+                if used_ext_ids is not None:
+                    used_ext_ids.add(num)
+                ext_id = f"ACCOUNT00{num:08d}"
+        else:
+            ext_id = random.choice(accounts_list)
+    else:
+        while True:
+            num = random.randint(0, 99999999)
+            if used_ext_ids is None or num not in used_ext_ids:
+                if used_ext_ids is not None:
+                    used_ext_ids.add(num)
+                ext_id = f"ACCOUNT00{num:08d}"
+                break
 
     row = {
         'vlocity_cmt__IsActive__c': bool_str(0.9),
@@ -104,11 +131,10 @@ def gen_row(i: int):
         'Name': name,
         'vlocity_cmt__IsPartner__c': bool_str(0.02),
         'pz_ReceivePushNotifications__c': bool_str(0.2),
-        'Legacy_Contact_Id__c': f"CONTACT00{i:08d}",
+        'pz_ExternalAccountId__c': ID_Account
     }
 
     final = {}
-    # Return a dict keyed by API names so the CSV can use API headers.
     for label, api in LABEL_TO_API.items():
         final[api] = row.get(api, '')
     return final
@@ -120,11 +146,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--n', type=int, default=200)
     ap.add_argument('--out', type=str, default='contacts_filtered.csv')
+    ap.add_argument('--accounts', type=str, default=None,
+                    help='CSV file containing account external IDs to use as a picklist (first column or header pz_ExternalAccountId__c).')
+    ap.add_argument('--unique-accounts', action='store_true',
+                    help='Pick unique account ids from the picklist (no replacement)')
     ap.add_argument('--seed', type=int, default=7)
     args = ap.parse_args()
-
     random.seed(args.seed)
-    rows = [gen_row(i) for i in range(1, args.n + 1)]
 
     out_arg = Path(args.out)
     script_dir = Path(__file__).resolve().parent
@@ -132,13 +160,36 @@ def main():
     default_outputs_dir = repo_scripts_dir / 'outputs'
     default_outputs_dir.mkdir(parents=True, exist_ok=True)
 
+    accounts_list = []
+    accounts_path = None
+    if args.accounts:
+        accounts_path = Path(args.accounts)
+    else:
+        candidate = default_outputs_dir / 'accounts_rows.csv'
+        if candidate.exists():
+            accounts_path = candidate
+
+    if accounts_path and accounts_path.exists():
+        try:
+            with open(accounts_path, newline='', encoding='utf-8') as af:
+                dr = csv.DictReader(af)
+                if 'pz_ExternalAccountId__c' in dr.fieldnames:
+                    accounts_list = [r['pz_ExternalAccountId__c'].strip() for r in dr if r.get('pz_ExternalAccountId__c')]
+                else:
+                    first_field = dr.fieldnames[0]
+                    accounts_list = [r[first_field].strip() for r in dr if r.get(first_field)]
+        except Exception:
+            accounts_list = []
+
+    used_ids = set()
+    rows = [gen_row(i, used_ids, accounts_list=accounts_list, unique_accounts=args.unique_accounts) for i in range(1, args.n + 1)]
+
     if out_arg.parent == Path('.'):
         out_path = default_outputs_dir / out_arg.name
     else:
         out_path = out_arg
 
     with open(out_path, 'w', newline='', encoding='utf-8') as f:
-        # Use API names as CSV headers per user's request
         w = csv.DictWriter(f, fieldnames=API_HEADER_NAMES, extrasaction='ignore')
         w.writeheader()
         for r in rows:
